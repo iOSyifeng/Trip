@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/dao/home_dao.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/model/sales_box_model.dart';
 import 'package:flutter_trip/pages/search_page.dart';
 import 'package:flutter_trip/pages/speak_page.dart';
+import 'package:flutter_trip/util/navigator_util.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
@@ -189,17 +191,12 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  CommonModel model = bannerList[index];
-                  return WebView(
-                    url: model.url,
-                    title: model.title,
-                    hideAppBar: model.hideAppBar,
-                  );
-                }),
-              );
+              CommonModel model = bannerList[index];
+              NavigatorUtil.push(context, WebView(
+                url: model.url,
+                title: model.title,
+                hideAppBar: model.hideAppBar,
+              ));
             },
             child: Image.network(
               bannerList[index].icon,
@@ -213,18 +210,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   _jumpToSearch() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return SearchPage(
-        hint: SEARCH_BAR_DEFAULT_TEXT,
-      );
-    }));
+    NavigatorUtil.push(context, SearchPage(
+      hint: SEARCH_BAR_DEFAULT_TEXT,
+    ));
   }
 
   _jumpToSpeak() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SpeakPage(),
-        ));
+    NavigatorUtil.push(context, SpeakPage());
+
   }
 }
